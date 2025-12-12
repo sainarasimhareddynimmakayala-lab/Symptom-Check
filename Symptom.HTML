@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symptom Checker</title>
+<style>
+/* ===== CSS START ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+
+body {
+  background: radial-gradient(circle at top right, #4fe3c1, #0b3060, #000814);
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  color:white;
+}
+
+.container {
+  width:100%;
+  max-width:420px;
+  background: rgba(255,255,255,0.08);
+  padding:28px;
+  border-radius:18px;
+  backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  text-align:center;
+}
+
+h1 {
+  font-size:28px;
+  margin-bottom:10px;
+  background: linear-gradient(90deg, #58ffd7, #7aa7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle { margin-bottom:25px; opacity:0.8; font-size:14px; }
+
+#symptomInput { width:100%; padding:14px; margin-bottom:20px; border:none; border-radius:12px; background: rgba(255,255,255,0.15); color:white; font-size:16px; outline:none; }
+
+button { width:48%; padding:12px; margin:5px 1%; border:none; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; }
+#checkBtn { background: linear-gradient(90deg, #41ffcc, #7aa7ff); color:#003b32; }
+#clearBtn { background:#777; color:white; }
+
+#resultBox { margin-top:25px; background: rgba(255,255,255,0.1); padding:18px; border-radius:12px; text-align:left; border:1px solid rgba(255,255,255,0.2); }
+#resultBox h3 { margin-bottom:8px; color:#94d9ff; }
+#resultText { opacity:0.9; }
+/* ===== CSS END ===== */
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🩺 Symptom Checker</h1>
+  <p class="subtitle">Enter symptoms to get a basic assessment</p>
+
+  <input type="text" id="symptomInput" placeholder="e.g. fever, cough">
+  <button id="checkBtn">Check Symptoms</button>
+  <button id="clearBtn">Clear</button>
+
+  <div id="resultBox">
+    <h3>Result</h3>
+    <p id="resultText">Your assessment will appear here.</p>
+  </div>
+</div>
+
+<script>
+/* ===== JS START ===== */
+document.addEventListener("DOMContentLoaded", function() {
+  var input = document.getElementById("symptomInput");
+  var checkBtn = document.getElementById("checkBtn");
+  var clearBtn = document.getElementById("clearBtn");
+  var result = document.getElementById("resultText");
+
+  checkBtn.addEventListener("click", function() {
+    var text = input.value.trim().toLowerCase();
+
+    if(text === "") {
+      result.textContent = "Please enter at least one symptom.";
+      return;
+    }
+
+    var output = "";
+
+    if(text.indexOf("fever") !== -1 || text.indexOf("cough") !== -1) {
+      output += "Possible viral infection. ";
+    }
+    if(text.indexOf("headache") !== -1) {
+      output += "May indicate stress, dehydration, or infection. ";
+    }
+    if(text.indexOf("vomit") !== -1 || text.indexOf("nausea") !== -1) {
+      output += "Could be stomach-related or food reaction. ";
+    }
+    if(output === "") {
+      output = "No specific match found. Monitor your symptoms.";
+    }
+
+    result.textContent = output + " This is not a medical diagnosis.";
+  });
+
+  clearBtn.addEventListener("click", function() {
+    input.value = "";
+    result.textContent = "Your assessment will appear here.";
+  });
+});
+/* ===== JS END ===== */
+</script>
+
+</body>
+</html>
